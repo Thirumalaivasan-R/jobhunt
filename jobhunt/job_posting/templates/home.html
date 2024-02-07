@@ -1,0 +1,123 @@
+<!-- jobs/templates/home.html -->
+{% extends 'layouts/main.html' %}
+{% load static %}
+
+{% block title %}
+Job Hunt
+{% endblock title %}
+    
+{% block content %}
+    <main>
+        {% for job in jobs %}
+        <div class="job-card" >
+        <a href="{% url 'job_detail' job.id %}" >
+            <img src="{{ job.image.url }}" alt="{{ job.title }} Image" class="job-image">
+        </a>
+            <div class="job-details">
+                <a href="{% url 'job_detail' job.id %}" ><h2>{{ job.title | safe }}</h2></a>
+                <p class="date">{{ job.published_at|date:"F d, Y" }}<p>
+                <p class="jobdes">{{ job.description | safe }}</p>
+            </div>
+        
+        </div>  
+    {% endfor %}
+    </main>
+    
+    <style>
+main {
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    min-height: calc(100vh - 60px);
+    margin-bottom: 60px; 
+    margin-top: 50px;
+    /* This ensures the content is centered vertically on the page */
+    padding-top: 60px; /* Height of the fixed header */
+    box-sizing: border-box;
+    flex-wrap: wrap
+
+}
+
+.job-card {
+    flex: 0 0 calc(33.33% - 40px);
+    display: flex;
+   
+    max-width: 1300px; /* Adjust as needed */
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    align-items: center;
+    justify-content: center;
+    
+    
+
+}
+
+.job-image {
+    width: 260px; /* Adjust the size of the image */
+    height: 230px; /* 16:9 aspect ratio */
+    object-fit: contain;
+    
+}
+
+@media screen and (max-width: 768px) {
+    .job-card {
+        flex: 0 0 calc(100% - 40px); /* Adjust to a single column layout on smaller screens */
+        flex-direction: column;
+    }
+    .job-image {
+        align-self: center; /* Center the image within the job card */
+    }
+}
+
+.job-details {
+   
+    padding: 10px;
+    overflow: auto;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+}
+
+.jobdes{
+    line-height: 1.4em;
+    font-size: 18px;
+    
+    font-family: Inter, sans-serif;
+    color: #000000;
+}
+
+.date{
+    margin-bottom: 0;
+    color: #575760;
+    font-size: smaller;
+}
+
+h2{
+    font-weight: bold;
+}
+    </style>
+
+    
+    
+
+{% endblock content %}
+
+
+{% block scripts %}
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('.menu-toggle').click(function () {
+                    $('.nav-list').toggleClass('show');
+                });
+            });
+        </script>
+{% endblock scripts %}
